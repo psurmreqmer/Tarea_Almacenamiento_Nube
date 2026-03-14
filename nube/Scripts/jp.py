@@ -1,4 +1,4 @@
-#!/home/alumnadotarde/Desktop/Tarea Almacenamiento en la Nube/Tarea_Almacenamiento_Nube/nube/bin/python3
+#!C:\Users\marti\Desktop\Tarea_Almacenamiento_Nube\nube\Scripts\python.exe
 
 import sys
 import json

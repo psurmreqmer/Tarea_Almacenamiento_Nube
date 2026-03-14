@@ -2,51 +2,29 @@ import boto3
 from dotenv import load_dotenv
 import os
 
-# Cargar variables de entorno
+# 1. Cargar configuración
 load_dotenv()
 
-ACCESS_KEY = os.getenv("ACCESS_KEY")
-SECRET_KEY = os.getenv("SECRET_KEY")
-SESSION_TOKEN = os.getenv("SESSION_TOKEN")
-REGION = os.getenv("REGION")
-SECURITY_GROUP = os.getenv("SECURITY_GROUP")
-AMI = os.getenv("AMI")
-INSTANCE_TYPE = os.getenv("INSTANCIA")
-KEY = os.getenv("INSTANCIA")
-PAR_CLAVES = os.getenv("PAR_CLAVES")
-SUBNET_ID = os.getenv("SUBNET_ID")
+def conectar_aws():
+    """Establece la conexión inicial y devuelve una sesión de boto3."""
+    try:
+        session = boto3.session.Session(
+            aws_access_key_id=os.getenv("ACCESS_KEY"),
+            aws_secret_access_key=os.getenv("SECRET_KEY"),
+            aws_session_token=os.getenv("SESSION_TOKEN"),
+            region_name=os.getenv("REGION"),
+            SubnetId=os.getenv("SUBNET_ID")
+        )
+        
+        # Validamos la conexión haciendo una llamada simple (puedes usar sts)
+        sts = session.client('sts')
+        sts.get_caller_identity()
+        
+        print("Conexión con AWS exitosa")
+        return session
+    
+    except Exception as e:
+        print(f"Fallo en conexión: {e}")
+        return None
 
-
-PAR_CLAVES
-
-session = boto3.session.Session(
-    aws_access_key_id=ACCESS_KEY,
-    aws_secret_access_key=SECRET_KEY,
-    aws_session_token=SESSION_TOKEN,
-    region_name=REGION
-)
-
-# Crear cliente EC2
-ec2_client = session.client('ec2')
-print("SECURITY_GROUP:", SECURITY_GROUP)
-
-try:
-    # Crear la instancia
-    response = ec2_client.run_instances(
-    ImageId=AMI,         
-    InstanceType=INSTANCE_TYPE,  
-    KeyName=PAR_CLAVES,               # ✅ nombre correcto del key pair
-    SecurityGroupIds=[SECURITY_GROUP],  
-    SubnetId=SUBNET_ID,               
-    MinCount=1,            
-    MaxCount=1              
-)
-
-
-    # Obtener ID de la instancia creada
-    instance_id = response['Instances'][0]['InstanceId']
-    print(f"✅ Instancia EC2 creada con ID: {instance_id}")
-
-except Exception as e:
-    print("❌ Error al crear la instancia EC2")
-    print(e)
+#conectar_aws()
