@@ -3,6 +3,15 @@ import time
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+'''
+¿Qué almacenaría?
+
+Documentación compartida: Guías de talleres, PDFs de ofertas de trabajo y materiales de estudio que deben ser accesibles simultáneamente
+ por varias instancias (servidores) de la plataforma.
+
+Datos de rendimiento compartidos: Informes consolidados de los alumnos que diferentes departamentos (orientación, administración) 
+necesitan consultar al mismo tiempo.
+'''
 load_dotenv()
 session = conectar_aws()
 
@@ -51,7 +60,7 @@ def gestionar_efs(session):
     print(f"EFS {efs_id} disponible.")
 
     # 4. Crear Mount Target
-    print(f"📍 Creando Mount Target en {os.getenv('SUBNET_ID')}...")
+    print(f"Creando Mount Target en {os.getenv('SUBNET_ID')}...")
     efs.create_mount_target(
         FileSystemId=efs_id, 
         SubnetId=os.getenv("SUBNET_ID"), 
@@ -86,7 +95,7 @@ def gestionar_efs(session):
     os.system(f'scp -o StrictHostKeyChecking=no -i {clave} {txt_local} ec2-user@{public_ip}:/tmp/{txt_local}')
     os.system(f'ssh -o StrictHostKeyChecking=no -i {clave} ec2-user@{public_ip} "mv /tmp/{txt_local} /mnt/efs/{txt_local}"')
 
-    print(f"\n✨ ¡Punto de EFS completado! Archivo disponible en /mnt/efs/{txt_local}")
+    print(f"\nArchivo disponible en /mnt/efs/{txt_local}")
     return efs_id
 
 gestionar_efs(session)

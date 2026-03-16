@@ -3,6 +3,16 @@ import io
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+'''
+¿Qué almacenaría?
+
+Expedientes de alumnos graduados: Datos que ya no se consultan a diario pero deben conservarse.
+
+Histórico de talleres: Documentación de cursos de años anteriores que solo se revisan para auditorías o estadísticas anuales.
+
+Certificados antiguos: Copias de títulos ya entregados.
+'''
+
 load_dotenv()
 session = conectar_aws()
 s3 = session.client('s3')
@@ -12,7 +22,7 @@ BUCKET_NAME_IA = "estudiantes-poco-frecuente"
 def punto_2_s3_ia():
     try:
         region = os.getenv("REGION")
-        print(f"🪣 Creando bucket: {BUCKET_NAME_IA} en {region}...")
+        print(f"Creando bucket: {BUCKET_NAME_IA} en {region}...")
         
         if region == "us-east-1":
             s3.create_bucket(Bucket=BUCKET_NAME_IA)
@@ -26,7 +36,7 @@ def punto_2_s3_ia():
         path_s3 = "archivo_ia/info_estudiantes_ia.txt"
         contenido = "Este es un archivo de acceso poco frecuente (IA) sobre becas antiguas."
 
-        print(f"📤 Subiendo objeto a la capa STANDARD_IA...")
+        print(f"Subiendo objeto a la capa STANDARD_IA...")
         s3.put_object(
             Bucket=BUCKET_NAME_IA,
             Key=path_s3,

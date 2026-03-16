@@ -2,6 +2,15 @@ import os
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+'''
+¿Qué guardaría?
+
+Guías y materiales de talleres: Documentos que tienen mucha descarga al inicio del curso pero que luego dejan de usarse meses enteros.
+
+Portafolios de alumnos: Archivos que se consultan mucho mientras el alumno busca empleo, pero que quedan inactivos una vez que es contratado.
+
+Fotos de eventos y talleres: Archivos con patrones de acceso impredecibles.
+'''
 
 load_dotenv()
 session = conectar_aws()
@@ -12,7 +21,7 @@ BUCKET_NAME_INT = "estudiantes-intelligent-tiering"
 def punto_3_s3_intelligent():
     try:
         region = os.getenv("REGION")
-        print(f"🪣 Creando bucket: {BUCKET_NAME_INT} en {region}...")
+        print(f"Creando bucket: {BUCKET_NAME_INT} en {region}...")
         
         if region == "us-east-1":
             s3.create_bucket(Bucket=BUCKET_NAME_INT)
@@ -25,7 +34,7 @@ def punto_3_s3_intelligent():
         path_s3 = "fotos_alumnos/guia_estudiante.txt"
         contenido = "Guía completa para el alumno. Almacenada en Intelligent-Tiering para optimizar costes automáticamente."
 
-        print(f"📤 Subiendo objeto a la capa INTELLIGENT_TIERING...")
+        print(f"Subiendo objeto a la capa INTELLIGENT_TIERING...")
         s3.put_object(
             Bucket=BUCKET_NAME_INT,
             Key=path_s3,

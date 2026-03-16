@@ -2,6 +2,16 @@ import os
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+'''
+¿Qué guardaría?
+
+Documentación legal histórica: Escrituras de constitución de la asociación de alumnos o registros de fundaciones de hace décadas que solo se guardan por imperativo legal.
+
+Copias de seguridad maestras: Backups de datos de rendimiento de alumnos de promociones muy antiguas que es extremadamente improbable que se vuelvan a consultar.
+
+Registros de auditoría antiguos: Logs de acceso y movimientos de becas de hace más de 7 años.
+'''
+
 load_dotenv()
 session = conectar_aws()
 s3 = session.client('s3')
@@ -11,7 +21,7 @@ BUCKET_NAME_DEEP = "estudiantes-deep-archive-glacier"
 def punto_5_s3_deep_archive():
     try:
         region = os.getenv("REGION")
-        print(f"🪣 Creando bucket Deep Archive en {region}...")
+        print(f"Creando bucket Deep Archive en {region}...")
         
         if region == "us-east-1":
             s3.create_bucket(Bucket=BUCKET_NAME_DEEP)
@@ -34,7 +44,7 @@ def punto_5_s3_deep_archive():
 
         # --- OBTENER EL OBJETO (Metadatos) ---
         # Usamos head_object para evitar el error InvalidObjectState
-        print("📥 Recuperando metadatos del archivo profundo...")
+        print("Recuperando metadatos del archivo profundo...")
         response = s3.head_object(Bucket=BUCKET_NAME_DEEP, Key=path_s3)
         
         clase = response.get('StorageClass')

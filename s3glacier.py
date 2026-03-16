@@ -2,6 +2,16 @@ import os
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+'''
+¿Qué guardaaría?
+
+Expedientes históricos antiguos: Actas de notas y datos de alumnos de hace más de 5 o 10 años que legalmente deben conservarse pero casi nunca se consultan.
+
+Copias de seguridad anuales: Respaldos de la base de datos de ofertas de trabajo y talleres de ciclos escolares ya cerrados.
+
+Registros de auditoría: Logs de acceso de años previos para cumplimiento normativo.
+'''
+
 load_dotenv()
 session = conectar_aws()
 s3 = session.client('s3')
@@ -11,7 +21,7 @@ BUCKET_NAME_GLACIER = "estudiantes-glacier-archivo"
 def punto_4_s3_glacier():
     try:
         region = os.getenv("REGION")
-        print(f"🪣 Creando bucket Glacier: {BUCKET_NAME_GLACIER} en {region}...")
+        print(f"Creando bucket Glacier: {BUCKET_NAME_GLACIER} en {region}...")
         
         if region == "us-east-1":
             s3.create_bucket(Bucket=BUCKET_NAME_GLACIER)
@@ -24,7 +34,7 @@ def punto_4_s3_glacier():
         path_s3 = "archivo_historico/expedientes_graduados_2015.txt"
         contenido = "Actas y expedientes de alumnos graduados en el año 2015. Almacenamiento a largo plazo."
 
-        print(f"📤 Subiendo objeto a la capa GLACIER...")
+        print(f"Subiendo objeto a la capa GLACIER...")
         s3.put_object(
             Bucket=BUCKET_NAME_GLACIER,
             Key=path_s3,

@@ -46,7 +46,7 @@ def ejecutar_query(query, descripcion, mostrar_datos=False):
             imprimir_resultados(query_id)
     else:
         error_msg = athena.get_query_execution(QueryExecutionId=query_id)['QueryExecution']['Status'].get('StateChangeReason')
-        print(f"❌ Falló: {status}. Motivo: {error_msg}")
+        print(f"Falló: {status}. Motivo: {error_msg}")
 
 def preparar_datos_s3():
     # Datos de ejemplo

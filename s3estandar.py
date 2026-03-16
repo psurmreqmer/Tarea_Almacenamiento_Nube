@@ -4,6 +4,15 @@ import pandas as pd
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+'''
+¿Qué almacenar?
+Datos masivos de alumnos: Listados de asistencia y rendimiento escolar en formato CSV/JSON.
+
+Recursos multimedia: Vídeos de los talleres realizados o guías en PDF sobre ofertas de empleo.
+
+Datasets históricos: Archivos de años anteriores para realizar análisis comparativos de rendimiento.
+'''
+
 load_dotenv()
 session = conectar_aws()
 s3 = session.client('s3')

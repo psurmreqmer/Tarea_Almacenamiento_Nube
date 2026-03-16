@@ -3,6 +3,14 @@ import os
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+'''
+¿Que guardaría?
+
+Datos de rendimiento académico por curso: Particionar por curso=2025 o zona=norte para analizar el progreso de los alumnos de forma segmentada.
+
+Logs de ofertas de trabajo: Para ver qué ofertas se publicaron en meses de alta demanda laboral.
+'''
+
 load_dotenv()
 session = conectar_aws()
 s3 = session.client('s3')

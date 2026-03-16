@@ -3,6 +3,16 @@ import os
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+'''
+¿Qué almacenaría?
+
+Datasets históricos: Archivos CSV o Parquet con el rendimiento académico de años anteriores.
+
+Logs de actividad: Registro de inscripciones de los alumnos a los talleres.
+
+Resultados de consultas: El historial de análisis sobre qué categorías de talleres (Tecnología, etc.) tienen más demanda.
+'''
+
 load_dotenv()
 session = conectar_aws()
 athena = session.client('athena')

@@ -2,6 +2,12 @@ import boto3
 import os
 from conexion import conectar_aws
 
+'''
+¿Qué almacenaría?
+
+En este almacenamiento guardaría los expedientes académicos de los alumnos y los PDFs de las ofertas de trabajo
+'''
+
 session = conectar_aws()
 
 def crear_instancia_ec2(session):
@@ -45,7 +51,7 @@ def parar_instancia_ec2(session, instance_id):
 def eliminar_instancia_ec2(session, instance_id):
     ec2_client = session.client('ec2')
     try:
-        print(f"🗑️ Eliminando instancia {instance_id}...")
+        print(f"Eliminando instancia {instance_id}...")
         ec2_client.terminate_instances(InstanceIds=[instance_id])
         
         # Esperamos a que se elimine

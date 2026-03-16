@@ -3,6 +3,16 @@ from dotenv import load_dotenv
 from conexion import conectar_aws
 import time
 
+'''
+¿Qué almacenaría?
+Bases de datos locales de la aplicación que gestiona los talleres.
+
+Logs del servidor de ofertas de trabajo que requieren baja latencia.
+
+Archivos temporales del sistema operativo de la instancia que ayuda a los alumnos.
+'''
+
+
 # cargar variables del .env
 load_dotenv()
 

@@ -2,6 +2,16 @@ import os
 from dotenv import load_dotenv
 from conexion import conectar_aws
 
+''' 
+¿Qué almacenaría?
+
+Expedientes académicos: Para recuperar versiones anteriores si hay errores en la carga de notas de los alumnos.
+
+Bases de convocatorias de becas: Como haces en el código, para mantener el historial de cambios en las cuantías o requisitos.
+
+Listados de asistencia a talleres: Para auditar cambios accidentales en los datos de rendimiento.
+'''
+
 load_dotenv()
 session = conectar_aws()
 s3 = session.client('s3')
@@ -39,7 +49,7 @@ def punto_6_control_versiones():
         )
 
         # --- D. MOSTRAR LAS VERSIONES DISPONIBLES ---
-        print("\n🔍 Listando historial de versiones del objeto:")
+        print("\nListando historial de versiones del objeto:")
         versiones = s3.list_object_versions(Bucket=BUCKET_NAME, Prefix=key)
 
         print("-" * 60)
